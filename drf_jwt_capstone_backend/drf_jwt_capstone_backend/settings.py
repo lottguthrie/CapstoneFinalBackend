@@ -40,9 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'authentication.apps.AuthenticationConfig',
     'corsheaders',
-    'DailyReport.apps.DailyReportConfig',
-    'SupervisorReport.apps.SupervisorConfig',
-    'Supervisor.apps.SupervisorReportConfig',
+    
 ]
 
 MIDDLEWARE = [
@@ -158,11 +156,11 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=20),
 }
 
-AUTH_USER_MODEL = ['authentication.User', 
-                'model.DailyReport', 
-                'model.Supervisor', 
-                'model.SupervisorReport' 
-                    ]
+AUTH_USER_MODEL = 'authentication.User'
+                # 'authentication.models.DailyReport', 
+                # 'authentication.models.Supervisor', 
+                # 'authentication.models.SupervisorReport' 
+                    
 try:
     from drf_jwt_capstone_backend.local_settings import *
 except ImportError:

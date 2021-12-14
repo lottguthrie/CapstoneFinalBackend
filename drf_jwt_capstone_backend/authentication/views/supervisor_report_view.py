@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from django.http.response import Http404
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status
-from serializers import SupervisorReportSerializer
+from authentication.serializers import SupervisorReportSerializer
 from authentication.models import SupervisorReport
 
 class SupervisorReportView(generics.CreateAPIView):

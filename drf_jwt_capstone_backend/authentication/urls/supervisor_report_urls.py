@@ -1,12 +1,12 @@
 from django.urls import path
-from authentication.views.supervisor_report_view import SupervisorReportView as views
+from authentication.views import supervisor_report_view as views
 
 
 urlpatterns = [
 
-    path('', views.getSupervisorReport, name='supervisorreport'),
-    path('add', views.addSupervisorReport, name='supervisorreport-add'),
-    path('userSupervisorReport', views.getMySupervisorReport, name='user-supervisorreport'),
-    path('<str:pk>/delete', views.deleteSupervisorReport, name='delete-supervisorreport'),
-    path('<str:pk>/update', views.updateSupervisorReport, name='delete-supervisorreport'),
+    path('', views.SupervisorReportList.as_view(), name='supervisorreport'),
+    path('add', views.SupervisorReportList.as_view(), name='supervisorreport-add'),
+    path('userSupervisorReport/<int:pk>', views.SupervisorReportList.as_view(), name='user-supervisorreport'),
+    path('<int:pk>/delete', views.SupervisorReportDetail.as_view(), name='delete-supervisorreport'),
+    path('<int:pk>/update', views.SupervisorReportDetail.as_view(), name='update-supervisorreport'),
 ]

@@ -5,15 +5,15 @@ class AuthenticationConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'authentication'
 
-class DailyReportConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'DailyReport'
+# class DailyReportConfig(AppConfig):
+#     default_auto_field = 'django.db.models.BigAutoField'
+#     name = 'DailyReport'
 
-class SupervisorConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'Supervisor'
+# class SupervisorConfig(AppConfig):
+#     default_auto_field = 'django.db.models.BigAutoField'
+#     name = 'Supervisor'
 
     
-class SupervisorReportConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'SupervisorReport'
+# class SupervisorReportConfig(AppConfig):
+#     default_auto_field = 'django.db.models.BigAutoField'
+#     name = 'SupervisorReport'

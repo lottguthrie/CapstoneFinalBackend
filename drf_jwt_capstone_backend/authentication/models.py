@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from drf_jwt_capstone_backend.authentication.serializers import User
+# from drf_jwt_capstone_backend.authentication.serializers import User
 from django.contrib.auth import get_user_model
 
 
@@ -57,7 +57,7 @@ class Supervisor(AbstractUser):
     
 class SupervisorReport(models.Model):
     supervisor_report_id = models.IntegerField(blank=True, primary_key=True, default=0)
-    supervisor_id = models.ForeignKey(User, verbose_name = u'supervisor_id', on_delete = models.PROTECT)
+    supervisor_id = models.ForeignKey(Supervisor, verbose_name = u'supervisor_id', on_delete = models.PROTECT)
     date = models.DateTimeField
     total_calls_for_service = models.IntegerField(blank=True, default=0)
     total_case_numbers_pulled = models.IntegerField(blank=True, default=0)
