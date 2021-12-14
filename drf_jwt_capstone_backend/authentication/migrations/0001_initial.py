@@ -43,3 +43,104 @@ class Migration(migrations.Migration):
             ],
         ),
     ]
+
+class Migration(migrations.Migration):
+
+    initial = True
+
+    dependencies = [
+    ]
+
+    operations = [
+        migrations.CreateModel(
+            name='DailyReport',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('officer_id', models.IntegerField(blank=True, default=0)),
+                ('date', models.DateTimeField()),
+                ('calls_for_service', models.IntegerField(blank=True, default=0)),
+                ('reports', models.IntegerField(blank=True, default=0)),
+                ('supplements', models.IntegerField(blank=True, default=0)),
+                ('citations_issued', models.IntegerField(blank=True, default=0)),
+                ('warnings_issued', models.IntegerField(blank=True, default=0)),
+                ('traffic_stops', models.IntegerField(blank=True, default=0)),
+                ('citizen_contacts', models.IntegerField(blank=True, default=0)),
+                ('juvenile_contacts', models.IntegerField(blank=True, default=0)),
+                ('assigned_area', models.CharField(blank=True, max_length=30)),
+                ('assigned_vehicle', models.IntegerField(blank=True, default=0)),
+                ('miles_driven', models.IntegerField(blank=True, default=0)),
+                ('hours_worked', models.IntegerField(blank=True, default=0)),
+                ('case_numbers', models.CharField(blank=True, max_length=200)),
+            ],
+        ),
+    ]
+
+class Migration(migrations.Migration):
+
+    initial = True
+
+    dependencies = [
+        ('auth', '0012_alter_user_first_name_max_length'),
+    ]
+
+    operations = [
+        migrations.CreateModel(
+            name='Supervisor',
+            fields=[
+                ('Supervisorid', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('Supervisor_password', models.CharField(max_length=128, verbose_name='password')),
+                ('last_login', models.DateTimeField(blank=True, null=True, verbose_name='last login')),
+                ('username', models.CharField(error_messages={'unique': 'A user with that username already exists.'}, help_text='Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.', max_length=150, unique=True, validators=[django.contrib.auth.validators.UnicodeUsernameValidator()], verbose_name='username')),
+                ('first_name', models.CharField(blank=True, max_length=150, verbose_name='first name')),
+                ('last_name', models.CharField(blank=True, max_length=150, verbose_name='last name')),
+                ('middle_name', models.CharField(max_length=20)),
+                ('user_permissions', models.ManyToManyField(blank=True, help_text='Specific permissions for this user.', related_name='user_set', related_query_name='user', to='auth.Permission', verbose_name='user permissions')),
+            ],
+            options={
+                'verbose_name': 'supervisor',
+                'verbose_name_plural': 'supervisor',
+                'abstract': False,
+            },
+            managers=[
+                ('objects', django.contrib.auth.models.UserManager()),
+            ],
+        ),
+    ]
+
+class Migration(migrations.Migration):
+
+    initial = True
+
+    dependencies = [
+    ]
+
+    operations = [
+        migrations.CreateModel(
+            name='SupervisorReport',
+            fields=[
+                ('supervisor_report_id', models.IntegerField(blank=True, default=0, primary_key=True, serialize=False)),
+                ('supervisor_id', models.IntegerField(blank=True, default=0)),
+                ('total_calls_for_service', models.IntegerField(blank=True, default=0)),
+                ('total_case_numbers_pulled', models.IntegerField(blank=True, default=0)),
+                ('total_case_numbers_completed', models.IntegerField(blank=True, default=0)),
+                ('total_reports', models.IntegerField(blank=True, default=0)),
+                ('total_supplements', models.IntegerField(blank=True, default=0)),
+                ('total_vehicles_assigned', models.IntegerField(blank=True, default=0)),
+                ('total_miles_driven', models.IntegerField(blank=True, default=0)),
+                ('officers_on_road', models.IntegerField(blank=True, default=0)),
+                ('officers_on_desk', models.IntegerField(blank=True, default=0)),
+                ('officers_on_jail_duty', models.IntegerField(blank=True, default=0)),
+                ('officers_on_light_duty', models.IntegerField(blank=True, default=0)),
+                ('officers_out_sick', models.IntegerField(blank=True, default=0)),
+                ('officers_in_training', models.IntegerField(blank=True, default=0)),
+                ('officers_on_vacation', models.IntegerField(blank=True, default=0)),
+                ('officers_assigned_elswhere', models.IntegerField(blank=True, default=0)),
+                ('total_citations_issued', models.IntegerField(blank=True, default=0)),
+                ('total_warnings_issued', models.IntegerField(blank=True, default=0)),
+                ('total_citizen_contacts', models.IntegerField(blank=True, default=0)),
+                ('total_traffic_stops', models.IntegerField(blank=True, default=0)),
+                ('total_arrest_made', models.IntegerField(blank=True, default=0)),
+                ('total_juvenile_contacts', models.IntegerField(blank=True, default=0)),
+            ],
+        ),
+    ]

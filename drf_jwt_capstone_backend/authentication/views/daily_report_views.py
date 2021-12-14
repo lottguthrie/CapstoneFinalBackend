@@ -1,22 +1,16 @@
-from django.shortcuts import render
-from .models import DailyReport
-from .serializers import DailyReportSerializer
+from django.contrib.auth import get_user_model
 from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
-from django.core.exceptions import ObjectDoesNotExist
 from django.http.response import Http404
-from django.shortcuts import render
-from rest_framework.serializers import Serializer
-
-from .serializers import DailyReportSerializer
-
-
+from django.core.exceptions import ObjectDoesNotExist
+from rest_framework import status
+from serializers import DailyReportSerializer
+from authentication.models import DailyReport
 
 
-# Create your views here.
+User = get_user_model()
 class DailyReportView(generics.CreateAPIView):
     queryset = DailyReport.objects.all()
     permission_classes = (AllowAny,)
@@ -45,19 +39,19 @@ class DailyReportDetail(APIView):
             raise Http404
 
     def get(self, request, pk):
-        dailyreport = self.get_object(pk)
-        serializer = DailyReportSerializer(dailyreport)
+        DailyReport = self.get_object(pk)
+        serializer = DailyReportSerializer(DailyReport)
         return Response(serializer.data)
 
     def put(self,request, pk):
-        dailyreport = self.get_object(pk)
-        serializer = DailyReportSerializer(dailyreport, data=request.data)
+        DailyReport = self.get_object(pk)
+        serializer = DailyReportSerializer(DailyReport, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk):
-        dailyreport= self.get_object(pk)
-        dailyreport.delete()
+        DailyReport= self.get_object(pk)
+        DailyReport.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

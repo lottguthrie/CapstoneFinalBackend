@@ -1,20 +1,14 @@
-from django.shortcuts import render
-from .models import SupervisorReport
-from .serializers import SupervisorReportSerializer
+from django.contrib.auth import get_user_model
 from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
-from django.core.exceptions import ObjectDoesNotExist
 from django.http.response import Http404
-from django.shortcuts import render
-from rest_framework.serializers import Serializer
-from .serializers import SupervisorReportSerializer
+from django.core.exceptions import ObjectDoesNotExist
+from rest_framework import status
+from serializers import SupervisorReportSerializer
+from authentication.models import SupervisorReport
 
-
-
-# Create your views here.
 class SupervisorReportView(generics.CreateAPIView):
     queryset = SupervisorReport.objects.all()
     permission_classes = (AllowAny,)
@@ -43,19 +37,19 @@ class SupervisorReportDetail(APIView):
             raise Http404
 
     def get(self, request, pk):
-        supervisorreport = self.get_object(pk)
-        serializer = SupervisorReportSerializer(supervisorreport)
+        SupervisorReport = self.get_object(pk)
+        serializer = SupervisorReportSerializer(SupervisorReport)
         return Response(serializer.data)
 
     def put(self,request, pk):
-        supervisorreport = self.get_object(pk)
-        serializer = SupervisorReportSerializer(supervisorreport, data=request.data)
+        SupervisorReport = self.get_object(pk)
+        serializer =SupervisorReportSerializer(SupervisorReport, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk):
-        supervisorreport= self.get_object(pk)
-        supervisorreport.delete()
+        SupervisorReport= self.get_object(pk)
+        SupervisorReport.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
