@@ -19,7 +19,7 @@ class Officer_View(generics.CreateAPIView):
     permission_classes = (AllowAny,)
     serializer_class = UserSerializer
 
-User= get_user_model
+user= get_user_model
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
@@ -80,8 +80,8 @@ def getUserProfile(request):
 @api_view(['GET'])
 @permission_classes([IsAdminUser])
 def getUser(request):
-    users = User.objects.all()
-    serializer = UserSerializer(users, many=True)
+    user = User.objects.all()
+    serializer = UserSerializer(user, many=True)
     return Response(serializer.data)
 
 
@@ -89,7 +89,7 @@ def getUser(request):
 @permission_classes([IsAdminUser])
 def getUserById(request, pk):
     user = User.objects.get(id=pk)
-    serializer = UserSerializer(User, many=False)
+    serializer = UserSerializer(user, many=False)
     return Response(serializer.data)
 
 @api_view(['PUT'])

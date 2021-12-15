@@ -1,4 +1,4 @@
-from django.contrib.auth import get_user_model
+
 from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.views import APIView
@@ -10,7 +10,7 @@ from authentication.serializers import DailyReportSerializer
 from authentication.models import DailyReport
 
 
-User = get_user_model()
+
 class DailyReportView(generics.CreateAPIView):
     queryset = DailyReport.objects.all()
     permission_classes = (AllowAny,)

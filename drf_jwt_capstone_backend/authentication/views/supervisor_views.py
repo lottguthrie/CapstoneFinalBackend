@@ -14,7 +14,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth.hashers import make_password
 
-from drf_jwt_capstone_backend.authentication.serializers import Supervisor
+from authentication.serializers import Supervisor
 
 
 Supervisor = get_user_model
@@ -87,16 +87,16 @@ def getSupervisorProfile(request):
 @api_view(['GET'])
 @permission_classes([IsAdminUser])
 def getSupervisors(request):
-    users = User.objects.all()
-    serializer = UserSerializer(users, many=True)
+    user = User.objects.all()
+    serializer = UserSerializer(user, many=True)
     return Response(serializer.data)
 
 
 @api_view(['GET'])
 @permission_classes([IsAdminUser])
 def getSupervisorById(request, pk):
-    supervisor = User.objects.get(id=pk)
-    serializer = UserSerializer(User, many=False)
+    user = User.objects.get(id=pk)
+    serializer = UserSerializer(user, many=False)
     return Response(serializer.data)
 
 @api_view(['PUT'])

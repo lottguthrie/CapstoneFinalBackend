@@ -8,7 +8,7 @@ from .models import User
 from .models import Supervisor
 from rest_framework_simplejwt.tokens import RefreshToken
 
-
+#
 class UserSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField(read_only=True)
     officer_id = serializers.SerializerMethodField(read_only=True)
@@ -79,7 +79,7 @@ class SupervisorSerializer(serializers.ModelSerializer):
         supervisors = Supervisor.objects.create(
             supervisor_id=validated_data['supervisor_id'],
             officer_id=validated_data['officer_id'],
-            supervisor_reportid=validated_data['supervisor_reportid'],
+            supervisor_reportid=validated_data['supervisor_report_id'],
             last_name=validated_data['last_name'],
             first_name=validated_data['first_name'],
             middle_name=validated_data['middle_name'],
