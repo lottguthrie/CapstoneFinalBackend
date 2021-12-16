@@ -6,7 +6,7 @@ from .models import DailyReport
 from .models import SupervisorReport 
 from .models import User
 from .models import Supervisor
-from rest_framework_simplejwt.tokens import RefreshToken
+
 
 #
 class UserSerializer(serializers.ModelSerializer):
@@ -33,18 +33,6 @@ class UserSerializer(serializers.ModelSerializer):
             return name
 
     
-
-
-class UserSerializerWithToken(UserSerializer):
-    token = serializers.SerializerMethodField(read_only=True)
-    class Meta:
-        model = User
-        fields = ['username', 'email',]
-                 
-
-    def get_token(self, obj):
-        token = RefreshToken.for_user(obj)
-        return str(token.access_token)
     
 class DailyReportSerializer(serializers.ModelSerializer):
     class Meta:
@@ -57,9 +45,6 @@ class DailyReportSerializer(serializers.ModelSerializer):
             DailyReports = obj.DailyReport_set.all()
             serializer = DailyReport(DailyReports, many=True)
             return serializer.data
-
-
-# Supervisor = get_user_model()
 
 
 class SupervisorSerializer(serializers.ModelSerializer):

@@ -1,43 +1,16 @@
-from django.contrib.auth import get_user_model
 from rest_framework import generics
-from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.views import APIView
 from authentication.models import User
-from authentication.serializers import UserSerializer, SupervisorSerializer
+from authentication.serializers import SupervisorSerializer
 from rest_framework.response import Response
-from django.http.response import Http404
-from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth.hashers import make_password
-
 from authentication.serializers import Supervisor
 
 
-Supervisor = get_user_model
-
 class SupervisorView(generics.CreateAPIView):
     queryset = User.objects.all()
-    permission_classes = (AllowAny,)
     serializer_class = SupervisorSerializer
-
-
-class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-    def validate(self, attrs):
-        data = super().validate(attrs)
-        
-        serializer = UserSerializer(self.user).data
-        for k, v in serializer.items():
-            data[k] = v
-        return data
-
-
-
-class MyTokenObtainPairView(TokenObtainPairView):
-    serializer_class = MyTokenObtainPairSerializer
 
 @api_view(['POST'])
 def registerSupervisor(request):
@@ -45,28 +18,28 @@ def registerSupervisor(request):
 
     try:
         supervisor = Supervisor.objects.create(
+
             SupervisorId = data['Supervisor_Id'],
-            username = data['email'],
-            email = data['email'],
+            last_name = data['last_name'],
+            badge_number = data['badge_number'],
             password = make_password(data['password'])
         )
-        serializer = UserSerializer(supervisor, many=False)
+        serializer = SupervisorSerializer(supervisor, many=False)
         return Response(serializer.data)
     except:
-        message = {'detail':'This email is already registered.'}
+        message = {'detail':'This Supervisor is already registered.'}
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['PUT'])
-@permission_classes([IsAuthenticated])
 def updateSupervisorProfile(request):
-    user = request.Supervisor
-    serializer = UserSerializer(user, many=False)
+    Supervisor = request.Supervisor
+    serializer = SupervisorSerializer(Supervisor, many=False)
     
     data = request.data
-    User.first_name = data['name']
-    User.username = data['email']
-    User.email = data['email']
+    Supervisor.first_name = data['firsrtname']
+    Supervisor.last_name = data['lastname']
+    Supervisor.badge_number= data['badgenumber']
     if data['password'] != '':
         User.password = make_password(data['password'])
         
@@ -76,51 +49,46 @@ def updateSupervisorProfile(request):
 
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
 def getSupervisorProfile(request):
-    user = request.Supervisor
+    Supervisor = request.Supervisor
     
-    serializer = UserSerializer(user, many=False)
+    serializer = SupervisorSerializer(Supervisor, many=False)
     return Response(serializer.data)
 
 
 @api_view(['GET'])
-@permission_classes([IsAdminUser])
 def getSupervisors(request):
-    user = User.objects.all()
-    serializer = UserSerializer(user, many=True)
+    Supervisor = User.objects.all()
+    serializer = SupervisorSerializer(Supervisor, many=True)
     return Response(serializer.data)
 
 
 @api_view(['GET'])
-@permission_classes([IsAdminUser])
 def getSupervisorById(request, pk):
-    user = User.objects.get(id=pk)
-    serializer = UserSerializer(user, many=False)
+    Supervisor = User.objects.get(id=pk)
+    serializer = SupervisorSerializer(Supervisor, many=False)
     return Response(serializer.data)
 
 @api_view(['PUT'])
-@permission_classes([IsAuthenticated])
 def updateUser(request, pk):
-    user = User.objects.get(id=pk)
+    Supervisor = User.objects.get(id=pk)
 
     data = request.data
 
-    User.first_name = data['name']
-    User.username = data['email']
-    User.email = data['email']
-    User.is_staff = data['isAdmin']
+    Supervisor.first_name = data['firsrtname']
+    Supervisor.last_name = data['lastname']
+    Supervisor.badge_number= data['badgenumber']
+    
 
-    User.save()
+    Supervisor.save()
 
-    serializer = UserSerializer(user, many=False)
+    serializer = SupervisorSerializer(Supervisor, many=False)
 
     return Response(serializer.data)
 
 
 @api_view(['DELETE'])
-@permission_classes([IsAdminUser])
-def deleteUser(request, pk):
-    userForDeletion = User.objects.get(id=pk)
-    userForDeletion.delete()
+def deleteSupervisor(request, pk):
+    SupervisorForDeletion = User.objects.get(id=pk)
+    SupervisorForDeletion.delete()
     return Response('Supervisor removed')

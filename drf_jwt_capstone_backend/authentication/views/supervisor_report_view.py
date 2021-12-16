@@ -1,21 +1,16 @@
-from django.contrib.auth import get_user_model
 from rest_framework import generics
-from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.http.response import Http404
-from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status
 from authentication.serializers import SupervisorReportSerializer
 from authentication.models import SupervisorReport
 
 class SupervisorReportView(generics.CreateAPIView):
     queryset = SupervisorReport.objects.all()
-    permission_classes = (AllowAny,)
     serializer_class = SupervisorReportSerializer
 
 class SupervisorReportList(APIView):
-    permission_classes = [IsAuthenticated]
     def get(self, request):
         supervisorreport = SupervisorReport.objects.all()
         serializer = SupervisorReportSerializer(supervisorreport, many=True)
@@ -29,7 +24,6 @@ class SupervisorReportList(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class SupervisorReportDetail(APIView):
-    permission_classes = [IsAuthenticated]
     def get_object(self, pk):
         try:
             return SupervisorReport.objects.get(pk=pk)

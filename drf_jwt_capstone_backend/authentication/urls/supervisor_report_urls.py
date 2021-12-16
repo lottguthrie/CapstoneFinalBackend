@@ -1,5 +1,5 @@
 from django.urls import path
-from authentication.views import supervisor_report_view as views
+from authentication import supervisor_report_view as views
 
 
 urlpatterns = [

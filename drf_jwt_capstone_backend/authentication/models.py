@@ -1,7 +1,7 @@
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.contrib.auth import get_user_model
+
 
 
 # Create your models here.
@@ -19,12 +19,6 @@ class User(AbstractUser):
     badge_number = models.IntegerField(blank=True, null= True, default=0)
     officer_id = models.IntegerField(blank=True, null= True, default=0)
     supervisor_id = models.IntegerField(blank=True, null= True, default=0)
-
-    def __str__(self):
-        return self.get_full_name
-
-
-user = get_user_model()
 
 class DailyReport(models.Model):
     report_id = models.IntegerField(blank=True, null= True, default=0)
@@ -44,8 +38,7 @@ class DailyReport(models.Model):
     hours_worked = models.IntegerField(blank=True, null= True, default=0)
     case_numbers = models.CharField(max_length=20, blank=True, null= True)
 
-    def __str__(self):
-        return self.report_id
+
 
 class Supervisor(AbstractUser):
     supervisor_id = models.IntegerField(blank=True, null= True, default=0)
@@ -55,8 +48,7 @@ class Supervisor(AbstractUser):
     middle_name = models.CharField(max_length=20, blank=True, null= True)
     badge_number = models.IntegerField(blank=True, null= True, default=0)
 
-    def __str__(self):
-        return self.supervisor_id
+
     
 class SupervisorReport(models.Model):
     supervisor_report_id = models.IntegerField(blank=True, null= True, default=0)
@@ -84,5 +76,3 @@ class SupervisorReport(models.Model):
     total_arrest_made = models.IntegerField(blank=True, null= True, default=0)
     total_juvenile_contacts = models.IntegerField(blank=True, null= True, default=0)
 
-    def __str__(self):
-        return self.supervisor_report_id
